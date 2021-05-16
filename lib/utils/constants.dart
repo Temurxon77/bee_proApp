@@ -1,31 +1,28 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+
+// platform channel
 const platform = const MethodChannel('uz.colibrisoft.beepro/ussd_call');
 
 // Constant Colors
-final Color customBlack = Colors.black87;
-final Color beelineColor = Color(0xFFFFE047);
-final Color ucellColor = Color(0xFF642887);
+const Color customBlack = Colors.black87;
+const Color beelineColor = Color(0xFFFFE047);
+const Color ucellColor = Color(0xFF642887);
+const Color borderGray = Color(0xFFEEEEEE);
 
-final ScrollPhysics bouncePhysics = BouncingScrollPhysics();
+//Widget attributes
+const ScrollPhysics bouncePhysics = BouncingScrollPhysics();
+const ScrollPhysics clampingPhysics = ClampingScrollPhysics();
 
+// Bottom Navbar
 const List<BottomNavigationBarItem> bottomBar = [
-  BottomNavigationBarItem(icon: Icon(Icons.monetization_on_outlined),label: "Balance"),
-  BottomNavigationBarItem(icon: Icon(Icons.wifi_outlined),label: "Internet Traffic"),
-  BottomNavigationBarItem(icon: Icon(Icons.support_agent_rounded),label: "Operator")
-];
-const List<String> actionsList = [
-  "Internet",
-  "Tariffs",
-  "Minutes",
-  "Services",
-  "SMS",
-  "USSD",
-  "Contacts"
-];
 
+];
+//home page constants
+const String beeLineLogo = "assets/images/beelogo.png";
+//menu item constants
 const List<IconData> menuIcons = [
   Icons.comment_outlined,
   Icons.contact_mail,
@@ -34,7 +31,6 @@ const List<IconData> menuIcons = [
   Icons.info_outlined,
   Icons.account_balance_wallet
 ];
-
 const List<IconData> actionsIconsList = [
     Icons.language,
     Icons.app_settings_alt,
@@ -42,6 +38,7 @@ const List<IconData> actionsIconsList = [
     Icons.info_outline,
     Icons.sms_outlined,
     Icons.tag,
-    Icons.headset_mic_outlined
+    Icons.headset_mic_outlined,
+    Icons.sim_card_outlined
 ];
 

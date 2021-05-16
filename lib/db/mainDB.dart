@@ -6,20 +6,19 @@ import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 
 Database db;
-class Genres {
-  int genresId;
-  String Name;
-  Genres({this.genresId,this.Name});
-
-  Genres.fromJson(Map<String,dynamic> json){
-    this.genresId = json['GenreId'];
-    this.Name = json['Name'];
-  }
-}
 class DatabaseCreator {
+
+  static const internetTable = "Internet";
+  static const servicesTable = "Services";
+  static const messagesTable = "Messages";
+  static const minutesTable = "Minutes";
+  static const tariffsTable = "Tariffs";
+  static const ussdTable = "Ussd";
+
   Future<void> initDB() async {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, "chinook.db");
+    
 
 // Check if the database exists
     var exists = await databaseExists(path);
@@ -44,13 +43,13 @@ class DatabaseCreator {
       print("Opening existing database");
     }
     db = await openDatabase(path,version:1,readOnly: false);
-    final data = await db.rawQuery("SELECT * FROM genres");
-    List<Genres> genres = List();
-    for(final node in data){
-      final todo = Genres.fromJson(node);
-      genres.add(todo);
-    }
-    print(genres[0].Name);
+    // final data = await db.rawQuery("SELECT * FROM genres");
+    // List<Genres> genres = List();
+    // for(final node in data){
+    //   final todo = Genres.fromJson(node);
+    //   genres.add(todo);
+    // }
+    // print(genres[0].Name);
 // open the database
     //db = await openDatabase(path);
   }

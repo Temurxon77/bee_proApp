@@ -1,3 +1,5 @@
+import 'package:bee_pro/locales/AppLocalization.dart';
+import 'package:bee_pro/pages/ContactPage.dart';
 import 'package:bee_pro/pages/MobileActionsGrid.dart';
 import 'package:bee_pro/utils/constants.dart';
 import 'package:bee_pro/utils/helperFunctions.dart';
@@ -20,7 +22,7 @@ class ExampleStaggeredAnimations extends StatefulWidget {
 class _ExampleStaggeredAnimationsState extends State<ExampleStaggeredAnimations>
     with SingleTickerProviderStateMixin {
   AnimationController _drawerSlideController;
-
+  static List<String> actionsList;
   @override
   void initState() {
     super.initState();
@@ -28,6 +30,21 @@ class _ExampleStaggeredAnimationsState extends State<ExampleStaggeredAnimations>
       vsync: this,
       duration: const Duration(milliseconds: 150),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    actionsList = [
+      AppLocalization.of(context).translate("Internet"),
+      AppLocalization.of(context).translate("Tariffs"),
+      AppLocalization.of(context).translate("Minutes"),
+      AppLocalization.of(context).translate("Services"),
+      AppLocalization.of(context).translate("SMS"),
+      AppLocalization.of(context).translate("USSD"),
+      AppLocalization.of(context).translate("Contacts"),
+      AppLocalization.of(context).translate("Numbers")
+    ];
+    super.didChangeDependencies();
   }
 
   @override
@@ -100,9 +117,9 @@ class _ExampleStaggeredAnimationsState extends State<ExampleStaggeredAnimations>
       Expanded(child: HomeLogo()),
       Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Text("Mobile Actions",
+          child: Text(AppLocalization.of(context).translate("MobileActions"),
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold))),
-      Expanded(child: MobileActionsGrid())
+      Expanded(child: MobileActionsGrid(actionsList: actionsList))
     ]);
   }
 
@@ -123,22 +140,15 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
-  static const _menuTitles = [
-    'Languages',
-    'Contact Us',
-    'Share',
-    'Rate',
-    'About this App',
-    'Top up Balance'
-  ];
 
   static const _initialDelayTime = Duration(milliseconds: 50);
   static const _itemSlideTime = Duration(milliseconds: 250);
   static const _staggerTime = Duration(milliseconds: 50);
   static const _buttonDelayTime = Duration(milliseconds: 150);
   static const _buttonTime = Duration(milliseconds: 500);
+  static List<String> _menuTitles;
   final _animationDuration = _initialDelayTime +
-      (_staggerTime * _menuTitles.length) +
+      (_staggerTime * 6) +
       _buttonDelayTime +
       _buttonTime;
 
@@ -158,8 +168,22 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
     )..forward();
   }
 
+  @override
+  void didChangeDependencies() {
+    _menuTitles = [
+      AppLocalization.of(context).translate("Languages"),
+      AppLocalization.of(context).translate("ContactUs"),
+      AppLocalization.of(context).translate("Share"),
+      AppLocalization.of(context).translate("Rate"),
+      AppLocalization.of(context).translate("About"),
+      AppLocalization.of(context).translate("TopBalance")
+    ];
+
+    super.didChangeDependencies();
+  }
+
   void _createAnimationIntervals() {
-    for (var i = 0; i < _menuTitles.length; ++i) {
+    for (var i = 0; i < 6; ++i) {
       final startTime = _initialDelayTime + (_staggerTime * i);
       final endTime = startTime + _itemSlideTime;
       _itemSlideIntervals.add(
@@ -171,7 +195,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
     }
 
     final buttonStartTime =
-        Duration(milliseconds: (_menuTitles.length * 50)) + _buttonDelayTime;
+        Duration(milliseconds: (6 * 50)) + _buttonDelayTime;
     final buttonEndTime = buttonStartTime + _buttonTime;
     _buttonInterval = Interval(
         buttonStartTime.inMilliseconds / _animationDuration.inMilliseconds,
@@ -194,14 +218,6 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
         ]));
   }
 
-  final List<Widget> _languageContent = [
-    RadioListTile(
-        title: const Text("O\'zbek"), value: false, onChanged: (val) {}),
-    RadioListTile(
-        title: const Text("Русский"), value: false, onChanged: (val) {}),
-    RadioListTile(
-        title: const Text("English"), value: true, onChanged: (val) {})
-  ];
   final List<Widget> _topUpBalance = [
     ImageButton(action: null, assetPath: null),
     ImageButton(action: null, assetPath: null),
@@ -210,14 +226,14 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
   ];
   Future<void> menuHandler(int index, BuildContext context) async {
     try {
+
       switch (index) {
         case 0:
-          await DialogModal(
-              context: context,
-              content: _languageContent,
-              title: 'Choose Language');
+          await langModal(
+              context: context);
           break;
         case 1:
+          await navigateTo(context: context,redirect: ContactPage());
           break;
         case 2:
           Share.share(
@@ -232,7 +248,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
         case 4:
           break;
         case 5:
-          await DialogModal(context: context, content: _topUpBalance);
+          await dialogModal(context: context, content: _topUpBalance);
           break;
       }
     } catch (err) {

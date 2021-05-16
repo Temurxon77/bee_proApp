@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LogoItem extends StatelessWidget {
   final Color bgColor;
+  final bool isHidden;
 
-  const LogoItem({Key key, this.bgColor}) : super(key: key);
+  const LogoItem({Key key, this.bgColor,this.isHidden}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +19,7 @@ class LogoItem extends StatelessWidget {
       child: Center(child: CircleAvatar(
           backgroundColor: Colors.grey.shade100,
           radius: 25.0,
-          child: Image.asset("assets/images/beelogo.png",fit: BoxFit.cover)
+          child: isHidden ? Icon(CupertinoIcons.question_circle,color: this.bgColor) : Image.asset("assets/images/beelogo.png",fit: BoxFit.cover)
       ))
     );
   }

@@ -1,5 +1,7 @@
 import 'package:android_intent/android_intent.dart';
+import 'package:bee_pro/locales/AppLocalization.dart';
 import 'package:bee_pro/utils/constants.dart';
+import 'package:bee_pro/widgets/LanguageHandler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -68,13 +70,13 @@ Future<void> openSettings() async {
         data: 'package:com.example.bee_pro'
     );
     settingsIntent.launch().then((value) => print("OK")).catchError((err)=>
-    throw FlutterError('cannot launch app details $err')
+      throw FlutterError('cannot launch app details $err')
     );
   }catch(err){
     print(err);
   }
 }
-Future<void> DialogModal({@required BuildContext context,@required List<Widget> content, String title = "ModalBox"}) async {
+Future<void> dialogModal({@required BuildContext context,@required List<Widget> content, String title = "ModalBox"}) async {
   return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -86,3 +88,18 @@ Future<void> DialogModal({@required BuildContext context,@required List<Widget> 
       }
   );
 }
+
+Future<void> langModal({@required BuildContext context}) async {
+
+  return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            contentPadding: const EdgeInsets.only(top: 10,bottom: 10),
+            title: Text(AppLocalization.of(context).translate("Languages"),textAlign: TextAlign.center),
+            content: LanguageHandler()
+        );
+      }
+  );
+}
+

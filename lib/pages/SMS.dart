@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 
 import 'package:bee_pro/locales/AppLocalization.dart';
-import 'package:bee_pro/pages/Services/ServicesTypes.dart';
+import 'package:bee_pro/pages/SMS/SMS_Packages.dart';
 import 'package:bee_pro/utils/constants.dart';
 import 'package:bee_pro/utils/helperFunctions.dart';
 
 
-class ServicesPage extends StatelessWidget {
+class SMSPage extends StatelessWidget {
   final String title;
 
-  ServicesPage({Key key, this.title}) : super(key: key);
-
+  const SMSPage({Key key, this.title}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child:Scaffold(
             appBar: AppBar(
                 backgroundColor: Colors.white,
@@ -29,20 +28,22 @@ class ServicesPage extends StatelessWidget {
                     onPressed: () async => popPage(context: context)
                 ),
                 bottom: TabBar(
-                    isScrollable: true,
                   //controller: tabController,
+                    isScrollable: true,
                     labelColor: customBlack,
                     indicatorColor: beelineColor,
                     tabs: [
-                      Tab(text: AppLocalization.of(context).translate("Main")),
-                      Tab(text: AppLocalization.of(context).translate("DisableSMS"))
+                      Tab(text: AppLocalization.of(context).translate("MSMSPckg")),
+                      Tab(text: AppLocalization.of(context).translate("DSMSPckg")),
+                      Tab(text: AppLocalization.of(context).translate("InterSMSPckg")),
                     ]
                 )
             ),
             body: TabBarView(
                 children: [
-                  ServicesTypes(type: 1),
-                  ServicesTypes(type: 3)
+                  SMSPackages(type: 2),
+                  SMSPackages(type: 1),
+                  SMSPackages(type: 3)
                 ]
             )
         )

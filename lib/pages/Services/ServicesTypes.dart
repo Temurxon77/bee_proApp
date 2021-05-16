@@ -1,0 +1,57 @@
+import 'package:bee_pro/locales/AppLocalization.dart';
+import 'package:bee_pro/models/models.dart';
+import 'package:bee_pro/repositories/RepoService.dart';
+import 'package:bee_pro/utils/constants.dart';
+import 'package:bee_pro/widgets/ItemCardSimple.dart';
+import 'package:flutter/material.dart';
+
+class ServicesTypes extends StatelessWidget {
+  final String title;
+  final int type;
+
+  const ServicesTypes(
+      {Key key,
+        this.type,
+        this.title})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Services>>(
+        future: RepositoryServiceBeePro.getServicesData(type: type),
+        builder: (context,snap) {
+          print(snap.data);
+          if(snap.hasData) {
+            if(snap.connectionState == ConnectionState.active){
+              return Center(child: CircularProgressIndicator(backgroundColor: beelineColor));
+            }
+            if(snap.connectionState == ConnectionState.done) {
+              return ListView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 5.0),
+                  addRepaintBoundaries: false,
+                  addSemanticIndexes:  false,
+                  addAutomaticKeepAlives: false,
+                  shrinkWrap: false,
+                  itemCount: snap.data.length,
+                  itemBuilder: (context,i) {
+                    if(AppLocalization.of(context).locale.languageCode == "ru"){
+                      return ItemCardSimple(
+                          title: snap.data[i].titleRU,
+                          description: snap.data[i].descriptionRU,
+                          activationCode: snap.data[i].activationCode);
+                    }
+                    return ItemCardSimple(
+                        title: snap.data[i].titleUZ,
+                        activationCode: snap.data[i].activationCode,
+                        description: snap.data[i].descriptionUZ);
+                  }
+              );
+            }
+          } else if(snap.hasError) {
+            return Center(child: Text("Something went wrong..."));
+          }
+          return Center();
+        }
+    );
+  }
+}

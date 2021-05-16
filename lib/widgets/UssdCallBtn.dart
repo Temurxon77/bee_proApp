@@ -1,9 +1,6 @@
+import 'package:bee_pro/locales/AppLocalization.dart';
 import 'package:bee_pro/services/USSDService.dart';
-import 'package:bee_pro/utils/constants.dart';
-import 'package:bee_pro/utils/helperFunctions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class USSDCallButton extends StatelessWidget {
   final String ussdCode;
@@ -13,9 +10,11 @@ class USSDCallButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width*0.6,
+          height: 40.0,
           color: Colors.yellow,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child: Text("USSD Call"),onPressed: () async {
+          child: Text(AppLocalization.of(context).translate("Connect")),onPressed: () async {
             USSDService ussdService = USSDService();
             await ussdService.ussdCall(ussdCode, context);
         })

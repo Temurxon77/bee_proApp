@@ -28,8 +28,8 @@ class MainActivity : FlutterActivity() {
                     try {
                         val packageName = call.argument<String>("pack_name")
                         openAppIntent(packageName)
-                    }catch (e: Exception){
-                        Log.i("TypeCasting","Type exception caught")
+                    } catch (e: Exception) {
+                        Log.i("TypeCasting", "Type exception caught")
                     }
                 }
                 else -> {

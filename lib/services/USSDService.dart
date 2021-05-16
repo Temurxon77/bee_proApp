@@ -14,8 +14,8 @@ class USSDService {
 
   final Widget dialogWidget = ListBody(
       children: <Widget>[
-        Text('You declined call function'),
-        Text('You can turn it on on Settings,would you want to open?')
+        const Text('You declined call function'),
+        const Text('You can turn it on on Settings,would you want to open?')
       ]
   );
 
